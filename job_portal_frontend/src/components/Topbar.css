@@ -1,0 +1,30 @@
+.topbar {
+  background: var(--bg-secondary, #f8f9fa);
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 32px 0 0;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid var(--border-color, #e9ecef);
+  z-index: 15;
+}
+
+.theme-toggle {
+  background-color: #1F73B7;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 22px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.08);
+  transition: all 0.25s;
+  margin-left: 32px;
+}
+.theme-toggle:hover {
+  background: #22C55E;
+  color: #124191;
+}

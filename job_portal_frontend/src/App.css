@@ -1,13 +1,21 @@
 /* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
+  /* Brand primary/secondary/accent for IT Job Portal */
+  --primary: #124191;
+  --secondary: #1F73B7;
+  --accent: #22C55E;
+
+  --sidebar-bg: var(--primary);
+  --topbar-bg: var(--secondary);
+
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
+  --text-primary: #181a1b;
+  --text-secondary: #555e6c;
   --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+
+  --button-bg: var(--secondary);
+  --button-text: #fff;
 }
 
 [data-theme="dark"] {
@@ -84,21 +92,37 @@
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* App Modern Dashboard Layout */
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.main-content {
+  flex: 1 1 0;
+  margin-left: 210px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 1 1 0;
+  padding: 48px 32px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: calc(100vh - 54px);
 }
 
 /* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+  }
+  .main-content {
+    margin-left: 60px;
+  }
+  .content {
+    padding: 30px 10px;
   }
 }
