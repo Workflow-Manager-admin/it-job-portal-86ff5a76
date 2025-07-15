@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
@@ -11,6 +11,21 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
+import { useAppContext } from "./context/AppContext";
+
+// PUBLIC_INTERFACE
+function ProtectedRoute({ children, allowedRoles = null }) {
+  // Checks context for JWT token and (optionally) user role
+  const { state } = useAppContext();
+  if (!state.token || !state.user) {
+    return <Navigate to="/login" replace />;
+  }
+  if (allowedRoles && !allowedRoles.includes(state.user.role)) {
+    // If role not permitted, send home
+    return <Navigate to="/" replace />;
+  }
+  return children;
+}
 
 // PUBLIC_INTERFACE
 function App() {
@@ -37,11 +52,32 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/jobs" element={<JobListings />} />
               <Route path="/jobs/:jobId" element={<JobDetails />} />
-              <Route path="/post-job" element={<PostJob />} />
+              <Route
+                path="/post-job"
+                element={
+                  <ProtectedRoute allowedRoles={["employer"]}>
+                    <PostJob />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute allowedRoles={["candidate", "employer"]}>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute allowedRoles={["candidate", "employer"]}>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/profile" element={<Profile />} />
               {/* Redirect unknown routes */}
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
